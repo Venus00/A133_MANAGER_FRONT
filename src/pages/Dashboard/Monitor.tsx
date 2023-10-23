@@ -37,9 +37,9 @@ const Monitor =  () => {
     return (
         <div className="flex flex-col gap-6">
             <div className="flex justify-between">
-                <Card icon={cpu} value={status?.cpu} title={"CPU"} color="#219C90" />
-                <Card icon={disk} value={status?.storage?.used} title={"DISK"} color="#E9B824" />
-                <Card icon={ram} value={status?.memory?.used} title={"RAM"} color="#EE9322" />
+                <Card icon={cpu} value={status?.cpu+' %'} title={"CPU"} color="#219C90" />
+                <Card icon={disk} value={status?.storage?.used + ' GB / ' + status?.storage?.total+' GB'} title={"DISK"} color="#E9B824" />
+                <Card icon={ram} value={status?.memory?.used + ' GB / ' + status?.memory?.total+' GB'} title={"RAM"} color="#EE9322" />
                 <Card icon={usage} value={0} title={"PROCESS"} color="#D83F31" />
 
             </div>
