@@ -9,7 +9,7 @@ const Card = (props:any) => {
           {props.title}
         </div>
         </div>
-        <div className="absolute bottom-0 right-0 m-6 text-3xl text-white">
+        <div className="absolute bottom-0 right-0 m-6 text-xl text-white">
           {props.value}
         </div>
       </div>
