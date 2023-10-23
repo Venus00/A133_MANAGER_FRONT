@@ -24,7 +24,7 @@ export function HostConfiguration() {
         try {
             const result = await ApiClient.get('/general/hostname');
             console.log(result.data)
-            setOldHostname(result.data.hostanme);  
+            setOldHostname(result.data.hostname);  
         } catch (error) {
             console.log(error)
         }
