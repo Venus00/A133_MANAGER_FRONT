@@ -14,7 +14,6 @@ export function HostConfiguration() {
         try {
             const result = await ApiClient.post('/general/hostname',{hostname:host})
             console.log(result.data);
-            setOldHostname(result.data);
             notify();
         } catch (error) {
             console.log(error)
@@ -22,7 +21,13 @@ export function HostConfiguration() {
     }
 
     async function fetchHostname() {
-        const result = await ApiClient.get('general/hostname');
+        try {
+            const result = await ApiClient.get('general/hostname');
+            setOldHostname(result.data);  
+        } catch (error) {
+            console.log(error)
+        }
+
         
     }
     useEffect(() => {
