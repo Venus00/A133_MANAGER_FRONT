@@ -1,10 +1,11 @@
 import { Button, Input } from "@material-tailwind/react";
 import ApiClient from "../../features/axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 export function HostConfiguration() {
     const [host,setHost] = useState<string>('')
+    const [oldHostname,setOldHostname] = useState<string>('');
     const notify = () => toast.success("Host Submitted Succefully",{
         position: "bottom-right",
     });
@@ -12,15 +13,30 @@ export function HostConfiguration() {
         console.log(host)
         try {
             const result = await ApiClient.post('/general/hostname',{hostname:host})
+            console.log(result.data);
+            setOldHostname(result.data);
             notify();
         } catch (error) {
             console.log(error)
         }
     }
+
+    async function fetchHostname() {
+        const result = await ApiClient.get('general/hostname');
+        
+    }
+    useEffect(() => {
+      
+        fetchHostname();
+      
+    }, [])
+    
     return (
         <div>
              <div className="w-96 m-6">
-                            <Input label="Host" 
+                            <Input 
+                            label="Host" 
+                            placeholder={oldHostname}
                             onChange={(e:any)=>setHost(e.target.value)}
                             />
             </div>
