@@ -3,10 +3,11 @@ import NetNavTab from './NetNavTab';
 import wifi from '../../images/wifi.svg';
 import ethernet from '../../images/ethernet.svg';
 import ApiClient from '../../features/axios';
-
+import mobile from '../../images/mobile.svg'
 interface STATUS {
     wifi?:string;
     ethernet?:string;
+    mobile?:string;
 }
 export default function Network() {
     const [status,setStatus] = useState<STATUS>({})
@@ -37,8 +38,14 @@ export default function Network() {
                 </div>
                 <div>
                     <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-transparent ">
-                        <img src={wifi} />
+                        <img src={wifi}  />
                         <h3 className='ml-3'>{status?.wifi}</h3>
+                    </div>
+                </div>
+                <div>
+                    <div className="flex h-11.5 w-11.5 items-center justify-center rounded-full bg-transparent ">
+                        <img src={mobile} />
+                        <h3 className='ml-3'>{status?.mobile}</h3>
                     </div>
                 </div>
             </div>
