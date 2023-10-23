@@ -1,16 +1,20 @@
 import { Button, Input } from "@material-tailwind/react";
 import ApiClient from "../../features/axios";
 import { useState } from "react";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export function HostConfiguration() {
     const [host,setHost] = useState<string>('')
-
+    const notify = () => toast.success("Host Submitted Succefully",{
+        position: "bottom-right",
+    });
     async function submitHost() {
         console.log(host)
         try {
-            const result = await ApiClient.post('/host',{host})
+            const result = await ApiClient.post('/general/hostname',{hostname:host})
+            notify();
         } catch (error) {
-            
+            console.log(error)
         }
     }
     return (
