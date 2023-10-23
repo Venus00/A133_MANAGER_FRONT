@@ -35,7 +35,7 @@ export function HostConfiguration() {
         <div>
              <div className="w-96 m-6">
                             <Input 
-                            label="Host" 
+                            label={oldHostname} 
                             placeholder={oldHostname}
                             onChange={(e:any)=>setHost(e.target.value)}
                             />
