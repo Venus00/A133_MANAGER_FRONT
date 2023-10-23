@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import Logo from '../images/logo/logo.svg';
 import SidebarLinkGroup from './SidebarLinkGroup';
 
@@ -9,6 +9,7 @@ interface SidebarProps {
 }
 
 const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
 
@@ -102,7 +103,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
               <SidebarLinkGroup
                 activeCondition={
-                  pathname === '/monitor' || pathname.includes('dashboard')
+                  pathname === '/monitor' || pathname.includes('monitor')
                 }
               >
                 {(handleClick, open) => {
@@ -112,7 +113,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                         to="#"
                         className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
                           (pathname === '/' ||
-                            pathname.includes('dashboard')) &&
+                            pathname.includes('monitor')) &&
                           'bg-graydark dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
@@ -218,10 +219,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
               {/* <!-- Menu Item Settings --> */}
               <li>
-                <NavLink
-                  to="/configuration"
+                <div
+                  //to="/configuration"
+                  onClick={()=>navigate('/configuration')}
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('settings') &&
+                    pathname.includes('configuration') &&
                     'bg-graydark dark:bg-meta-4'
                   }`}
                 >
@@ -255,7 +257,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </defs>
                   </svg>
                   Configuration
-                </NavLink>
+                </div>
               </li>
               {/* <!-- Menu Item Settings --> */}
             </ul>
