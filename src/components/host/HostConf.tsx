@@ -38,7 +38,6 @@ export function HostConfiguration() {
     return (
         <div>
              <div className="flex  flex-col w-96 m-6">
-                            <h3>{oldHostname}</h3>
                             <Input 
                             label={oldHostname} 
                             placeholder={oldHostname}
