@@ -22,7 +22,7 @@ export function HostConfiguration() {
 
     async function fetchHostname() {
         try {
-            const result = await ApiClient.get('general/hostname');
+            const result = await ApiClient.get('/general/hostname');
             console.log(result.data)
             setOldHostname(result.data);  
         } catch (error) {
