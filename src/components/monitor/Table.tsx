@@ -46,7 +46,7 @@ export function Table() {
   }
   async function killProcess(pid:number) {
     try { 
-      const result = await ApiClient.post('process/kill',{pid})
+      const result = await ApiClient.post('/performance/process',{pid})
       console.log(result);
     } catch (error) {
       
