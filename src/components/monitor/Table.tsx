@@ -102,7 +102,8 @@ export function Table() {
                   mem,
                   cpu,
                   started,
-                  params
+                  params,
+                  command,
                 },
                 index,
               ) => {
@@ -166,7 +167,7 @@ export function Table() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {params}
+                        {command + ' '+params}
                       </Typography>
                     </td>
                     <td className={classes}>
