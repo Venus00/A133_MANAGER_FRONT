@@ -139,7 +139,7 @@ export function Table() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {mem}
+                        {mem.toFixed(2) + '%'}
                       </Typography>
                     </td>
                     <td className={classes}>
