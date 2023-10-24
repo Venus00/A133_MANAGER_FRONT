@@ -35,8 +35,8 @@ export function Table() {
       console.log(result.data)
       const all_process = await result.data.filter((item:any)=> (item.cpu>0 || item.mem>0))
       return await all_process.sort((a:any,b:any) => {
-        if(a.mem < b.mem) return 1;
-        if(a.mem > b.mem) return -1;
+        if(a.cpu < b.cpu) return 1;
+        if(a.cpu > b.cpu) return -1;
         return 0;
     });
     
