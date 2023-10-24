@@ -1,6 +1,7 @@
 import { Tab, TabPanel, Tabs, TabsBody, TabsHeader } from '@material-tailwind/react';
 import Wifi from './Wifi';
 import Ethernet from './Ethernet';
+import Mobile from './Mobile';
 
 export default function NetNavTab() {
     const data = [
@@ -13,6 +14,11 @@ export default function NetNavTab() {
             label: "Wifi",
             value: "Wifi",
             component: <Wifi />,
+        },
+        {
+            label: "Mobile",
+            value: "Mobile",
+            component: <Mobile />,
         },
     ];
     return (

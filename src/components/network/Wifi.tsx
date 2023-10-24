@@ -101,7 +101,7 @@ export default function Wifi() {
                             })}                        
                         >
                             {
-                                ssid.length>0 ? ssid.map(( item:any,key:number) => {
+                                ssid && ssid.length>0 ? ssid.map(( item:any,key:number) => {
                                     return (
                                         <Option key={key} value={item.ssid}>{item.ssid}</Option>
                                     )

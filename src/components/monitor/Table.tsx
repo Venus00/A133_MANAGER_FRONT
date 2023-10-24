@@ -11,19 +11,49 @@ import {
   Tooltip,
   Input,
 } from "@material-tailwind/react";
- 
-const TABLE_HEAD = ["Id", "Name", "Pid", "Usage","Terminate"];
- 
-const TABLE_ROWS = [
-  {
-    id: "",
-    name: "",
-    pid: "",
-    usage: "",
-  }
-];
- 
+import { useState } from "react";
+import useTable from "../../hooks/useTable";
+import { useQuery } from "react-query";
+import ApiClient from "../../features/axios";
+
+const TABLE_HEAD = ["Name", "Pid","Memory","CPU", "Started At","Command","Terminate"];
+
 export function Table() {
+  const rowsPerPage = 5;
+  const [page, setPage] = useState(1);
+  const { data: process } = useQuery({
+    initialData: [],
+    queryFn: fetchProcess,
+    queryKey: 'process',
+    refetchInterval: 10000
+  })
+  const { slice, range } = useTable(process, page, rowsPerPage);
+
+  async function fetchProcess() {
+    try {
+      const result = await ApiClient.get('/performance/processes');
+      console.log(result.data)
+      const all_process = await result.data.filter((item:any)=> (item.cpu>0 && item.mem>0))
+      return await all_process.sort((a:any,b:any) => {
+        if(a.mem < b.mem) return 1;
+        if(a.mem > b.mem) return -1;
+        return 0;
+    });
+    
+    } catch (error) {
+
+    }
+
+  
+  }
+  async function killProcess(pid:number) {
+    try { 
+      const result = await ApiClient.post('process/kill',{pid})
+      console.log(result);
+    } catch (error) {
+      
+    }
+  }
   return (
     <Card className="h-full w-full dark:bg-meta-4">
       <CardHeader floated={false} shadow={false} className="rounded-none  dark:bg-meta-4">
@@ -66,23 +96,25 @@ export function Table() {
             </tr>
           </thead>
           <tbody>
-            {TABLE_ROWS.map(
+            {slice ? slice.map(
               (
                 {
-                  id,
                   name,
                   pid,
-                  usage,
+                  mem,
+                  cpu,
+                  started,
+                  param
                 },
                 index,
               ) => {
-                const isLast = index === TABLE_ROWS.length - 1;
+                const isLast = index === slice.length - 1;
                 const classes = isLast
                   ? "p-4"
                   : "p-4 border-b border-blue-gray-50";
- 
+
                 return (
-                  <tr key={name}>
+                  <tr key={index}>
                     <td className={classes}>
                       <div className="flex items-center gap-3">
                         <Typography
@@ -90,18 +122,9 @@ export function Table() {
                           color="blue-gray"
                           className="font-bold"
                         >
-                          {id}
+                          {name}
                         </Typography>
                       </div>
-                    </td>
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        color="blue-gray"
-                        className="font-normal"
-                      >
-                        {name}
-                      </Typography>
                     </td>
                     <td className={classes}>
                       <Typography
@@ -118,53 +141,76 @@ export function Table() {
                         color="blue-gray"
                         className="font-normal"
                       >
-                        {usage}
+                        {mem}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {cpu.toFixed(2) + '%'}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {started}
+                      </Typography>
+                    </td>
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        color="blue-gray"
+                        className="font-normal"
+                      >
+                        {param}
                       </Typography>
                     </td>
                     <td className={classes}>
                       <Tooltip content="Kill Porcess">
-                        <IconButton variant="text">
-                          
+                        <IconButton variant="text" color="white" className="bg-red-800" onClick={()=>killProcess(pid)}>
+                            kill
                         </IconButton>
-                      </Tooltip>
+                      </Tooltip>  
                     </td>
                   </tr>
                 );
               },
-            )}
+            )
+          :
+          <></>
+          }
           </tbody>
         </table>
       </CardBody>
-      <CardFooter className="flex items-center justify-between border-t border-blue-gray-50 p-4">
-        <Button variant="outlined" size="sm">
+      <CardFooter className="flex  justify-between border-t border-blue-gray-50 p-4">
+          {/* {range.map((key, page) => {
+            return (
+              <IconButton key={key} variant="outlined" size="sm"  onClick={() => setPage(page)}>
+                {page+1}
+              </IconButton>
+            )
+          })
+          } */}
+           <Button variant="outlined" size="sm" onClick={()=>{
+          if(page>1) {setPage(page-1)}
+        }}>
           Previous
         </Button>
-        <div className="flex items-center gap-2">
-          <IconButton variant="outlined" size="sm">
-            1
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            2
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            3
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            ...
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            8
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            9
-          </IconButton>
-          <IconButton variant="text" size="sm">
-            10
-          </IconButton>
-        </div>
-        <Button variant="outlined" size="sm">
+        <Button variant="outlined" size="sm" onClick={()=>{
+          console.log(range.length-1)
+          console.log(page)
+          if(page<(range.length-1)) {
+            setPage(page+1)}
+        }}>
           Next
         </Button>
+       
       </CardFooter>
     </Card>
   );
