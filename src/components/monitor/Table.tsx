@@ -27,7 +27,7 @@ export function Table() {
     queryKey: 'process',
     refetchInterval: 10000
   })
-  const { slice, range } = useTable(process, page, rowsPerPage);
+  const { slice, range } = useTable(process ? process : [], page, rowsPerPage);
 
   async function fetchProcess() {
     try {
@@ -43,8 +43,6 @@ export function Table() {
     } catch (error) {
 
     }
-
-  
   }
   async function killProcess(pid:number) {
     try { 

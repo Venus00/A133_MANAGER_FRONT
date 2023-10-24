@@ -21,10 +21,7 @@ const useTable = (data:any[], page:number, rowsPerPage:number) => {
   useEffect(() => {
     const range = calculateRange(data, rowsPerPage);
     setTableRange([...range]);
-
-    console.log(data);
-    const slice = sliceData(data, page, rowsPerPage);
-    
+    const slice = sliceData(data, page, rowsPerPage);    
     setSlice([...slice]);
   }, [data,page]);
   
