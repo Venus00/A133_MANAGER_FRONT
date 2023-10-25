@@ -172,11 +172,9 @@ export default function Table() {
                                     <tr key={index}>
                                         <td className={classes}>
                                             <div className="flex items-center gap-3">
-                                            <Tooltip content="Kill Porcess">
-                                                <IconButton variant="text" color={`${type==='USB' ? "#495E57" : "#F5F7F8"}`} className="bg-[#F4CE14]">
+                                                <IconButton variant="text" color="white" className="bg-[#F4CE14]">
                                                     {type}
                                                 </IconButton>
-                                            </Tooltip>
                                             </div>
                                         </td>
                                         <td className={classes}>

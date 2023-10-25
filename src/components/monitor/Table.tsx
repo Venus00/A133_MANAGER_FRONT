@@ -171,11 +171,9 @@ export function Table() {
                       </Typography>
                     </td>
                     <td className={classes}>
-                      <Tooltip content="Kill Porcess">
                         <IconButton variant="text" color="white" className="bg-red-800" onClick={()=>killProcess(pid)}>
                             kill
                         </IconButton>
-                      </Tooltip>  
                     </td>
                   </tr>
                 );
