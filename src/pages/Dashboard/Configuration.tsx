@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import Network from '../../components/network/index.tsx';
 import Host from "../../components/host/index.tsx";
+import Communication from "../../components/communication/index.tsx";
 const Configuration = () => {
   const data = [
     {
@@ -20,9 +21,9 @@ const Configuration = () => {
       component:<Host/>,
     },
     {
-      label: "Access Point",
-      value: "Access Point",
-      component: `...`,
+      label: "Serial/USB Com",
+      value: "Communication",
+      component: <Communication/>,
     },
   ];
   return (
